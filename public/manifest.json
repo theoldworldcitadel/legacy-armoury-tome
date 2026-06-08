@@ -1,0 +1,22 @@
+{
+  "name": "Legacy Armoury Tome",
+  "short_name": "Armoury Tome",
+  "description": "Warhammer The Old World Legacy Army Lists",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0603",
+  "theme_color": "#b45309",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/app-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
