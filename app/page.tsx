@@ -107,6 +107,7 @@ export default function LegacyArmouryTome() {
             <img src="/logo.png" alt="Legacy Armoury Tome" className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-2xl" />
           </div>
 
+          {/* Upload Button - Top Right */}
           <label className="cursor-pointer flex items-center gap-3 bg-gradient-to-r from-amber-900 to-red-900 hover:from-amber-800 hover:to-red-800 px-6 py-3 md:px-8 md:py-4 rounded-2xl text-base md:text-lg font-semibold transition-all shadow-2xl">
             <Upload className="w-5 h-5" /> 
             <span className="hidden sm:inline">UPLOAD NEW GRIMOIRE</span>
@@ -120,11 +121,7 @@ export default function LegacyArmouryTome() {
         {/* Sidebar */}
         <div className="w-80 border-r border-amber-900 bg-[#140d08] p-6 overflow-auto">
           <div className="mb-8 flex justify-center">
-            <img 
-              src="/library-header.png" 
-              alt="Your Army Library" 
-              className="w-11/12 max-w-[260px] h-auto object-contain rounded-2xl border border-amber-900 shadow-2xl" 
-            />
+            <img src="/library-header.png" alt="Your Army Library" className="w-11/12 max-w-[260px] h-auto object-contain rounded-2xl border border-amber-900 shadow-2xl" />
           </div>
 
           <div className="space-y-3">
@@ -145,7 +142,7 @@ export default function LegacyArmouryTome() {
           </div>
         </div>
 
-        {/* Main Content Area */}
+        {/* Main Empty State with empty-placeholder.png */}
         <div className="flex-1 relative bg-[#1a120b] overflow-auto flex items-center justify-center">
           {selectedBook ? (
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
@@ -158,12 +155,12 @@ export default function LegacyArmouryTome() {
           ) : (
             <div className="flex flex-col items-center justify-center text-center px-8">
               <img 
-                src="/upload-button.png" 
-                alt="Upload New Grimoire" 
-                className="w-80 h-auto mb-10 drop-shadow-2xl" 
+                src="/empty-placeholder.png" 
+                alt="Tomes of Legend" 
+                className="w-96 h-auto mb-10 drop-shadow-2xl" 
               />
               <h2 className="text-4xl mb-4">The Tomes of Legend Await</h2>
-              <p className="text-xl text-amber-700 mb-8">Upload your Legacy PDFs • They are saved permanently</p>
+              <p className="text-xl text-amber-700">Upload your Legacy PDFs • They are saved permanently</p>
             </div>
           )}
         </div>
