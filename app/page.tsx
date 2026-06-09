@@ -98,24 +98,27 @@ export default function LegacyArmouryTome() {
   return (
     <div className="min-h-screen bg-[#0a0603] text-amber-100 flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="relative border-b border-amber-900 bg-black overflow-hidden h-28 sm:h-32 md:h-36 lg:h-40 shrink-0">
-        <img src="/header-banner.png" alt="Legacy Armoury Tome" className="absolute inset-0 w-full h-full object-cover object-center" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/85"></div>
+      {/* Header */}
+<header className="relative border-b border-amber-900 bg-black overflow-hidden h-28 sm:h-32 md:h-36 lg:h-40 shrink-0">
+  <img src="/header-banner.png" alt="Legacy Armoury Tome" className="absolute inset-0 w-full h-full object-cover object-center" />
+  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/85"></div>
 
-        <div className="absolute inset-0 flex items-center px-4 md:px-10 z-10">
-          <div className="flex-1 flex justify-center">
-            <img src="/logo.png" alt="Legacy Armoury Tome" className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-2xl" />
-          </div>
+  <div className="absolute inset-0 flex items-center px-4 md:px-10 z-10">
+    <div className="flex-1 flex justify-center">
+      <img src="/logo.png" alt="Legacy Armoury Tome" className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-2xl" />
+    </div>
 
-          {/* Upload Button - Top Right */}
-          <label className="cursor-pointer flex items-center gap-3 bg-gradient-to-r from-amber-900 to-red-900 hover:from-amber-800 hover:to-red-800 px-6 py-3 md:px-8 md:py-4 rounded-2xl text-base md:text-lg font-semibold transition-all shadow-2xl">
-            <Upload className="w-5 h-5" /> 
-            <span className="hidden sm:inline">UPLOAD NEW GRIMOIRE</span>
-            <span className="sm:hidden">UPLOAD</span>
-            <input type="file" accept=".pdf" className="hidden" onChange={handleUpload} />
-          </label>
-        </div>
-      </header>
+    {/* Upload Button replaced with your image */}
+    <label className="cursor-pointer">
+      <img 
+        src="/upload-button.png" 
+        alt="Upload New Grimoire" 
+        className="h-14 sm:h-16 md:h-20 w-auto object-contain hover:scale-105 transition-transform drop-shadow-2xl" 
+      />
+      <input type="file" accept=".pdf" className="hidden" onChange={handleUpload} />
+    </label>
+  </div>
+</header>
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
