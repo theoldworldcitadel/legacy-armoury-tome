@@ -99,20 +99,12 @@ export default function LegacyArmouryTome() {
     <div className="min-h-screen bg-[#0a0603] text-amber-100 flex flex-col overflow-hidden">
       {/* Header */}
       <header className="relative border-b border-amber-900 bg-black overflow-hidden h-28 sm:h-32 md:h-36 lg:h-40 shrink-0">
-        <img 
-          src="/header-banner.png" 
-          alt="Legacy Armoury Tome" 
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+        <img src="/header-banner.png" alt="Legacy Armoury Tome" className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/85"></div>
 
         <div className="absolute inset-0 flex items-center px-4 md:px-10 z-10">
           <div className="flex-1 flex justify-center">
-            <img 
-              src="/logo.png" 
-              alt="Legacy Armoury Tome Logo" 
-              className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-2xl" 
-            />
+            <img src="/logo.png" alt="Legacy Armoury Tome" className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-2xl" />
           </div>
 
           <label className="cursor-pointer flex items-center gap-3 bg-gradient-to-r from-amber-900 to-red-900 hover:from-amber-800 hover:to-red-800 px-6 py-3 md:px-8 md:py-4 rounded-2xl text-base md:text-lg font-semibold transition-all shadow-2xl">
@@ -153,8 +145,8 @@ export default function LegacyArmouryTome() {
           </div>
         </div>
 
-        {/* Main Viewer Area */}
-        <div className="flex-1 relative bg-[#1a120b] overflow-auto">
+        {/* Main Content Area */}
+        <div className="flex-1 relative bg-[#1a120b] overflow-auto flex items-center justify-center">
           {selectedBook ? (
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
               <Viewer
@@ -164,16 +156,19 @@ export default function LegacyArmouryTome() {
               />
             </Worker>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center px-8">
-              <BookOpen className="w-32 h-32 mb-8 text-amber-800" />
+            <div className="flex flex-col items-center justify-center text-center px-8">
+              <img 
+                src="/upload-button.png" 
+                alt="Upload New Grimoire" 
+                className="w-80 h-auto mb-10 drop-shadow-2xl" 
+              />
               <h2 className="text-4xl mb-4">The Tomes of Legend Await</h2>
-              <p className="text-xl text-amber-700">Upload your Legacy PDFs • They are saved permanently</p>
+              <p className="text-xl text-amber-700 mb-8">Upload your Legacy PDFs • They are saved permanently</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="border-t border-amber-900 bg-black/80 p-4 text-center text-sm text-amber-600 shrink-0">
         This app is unofficial and unendorsed by Games Workshop.<br />
         Created by the Warhammer The Old World Community Podcast &amp; Old World Tavern Magazine.<br />
