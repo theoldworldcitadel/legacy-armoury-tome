@@ -1,13 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Upload, BookOpen, Book, Trash2, Download } from 'lucide-react';
-import { Worker, Viewer } from '@react-pdf-viewer/core';
+import { Upload, BookOpen, Book, Trash2 } from 'lucide-react';
+import { Worker, Viewer, SpecialZoomLevel } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 export default function LegacyArmouryTome() {
-  const [library, setLibrary] = useState<Array<{ id: string; name: string; url: string; data: ArrayBuffer }>>([]);
+  const [library, setLibrary] = useState<Array<{ id: string; name: string; url: string }>>([]);
   const [selectedBook, setSelectedBook] = useState<string | null>(null);
 
   useEffect(() => {
@@ -41,9 +41,11 @@ export default function LegacyArmouryTome() {
       const loaded = saved.map(item => ({
         id: item.id,
         name: item.name,
-        url: URL.createObjectURL(new Blob([item.data])),
-        data: item.data
+        url: URL.createObjectURL(new Blob([item.data]))
       }));
+
+      // Sort Army Lists Alphabetically
+      loaded.sort((a, b) => a.name.localeCompare(b.name));
 
       setLibrary(loaded);
     } catch (err) {
@@ -93,52 +95,38 @@ export default function LegacyArmouryTome() {
     }
   };
 
-  const downloadBook = (book: { name: string; data: ArrayBuffer }) => {
-    const blob = new Blob([book.data], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${book.name}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   return (
     <div className="min-h-screen bg-[#0a0603] text-amber-100 overflow-hidden flex flex-col">
-      {/* Header */}
-      <header className="relative border-b border-amber-900 bg-black overflow-hidden h-32 sm:h-36 md:h-40 lg:h-48">
+      <header className="relative border-b border-amber-900 bg-black overflow-hidden h-28 sm:h-32 md:h-36 lg:h-44">
         <img 
           src="/header-banner.png" 
           alt="Legacy Armoury Tome" 
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/75 to-black/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/85"></div>
 
-        <div className="absolute inset-0 flex items-center px-6 md:px-12 z-10">
+        <div className="absolute inset-0 flex items-center px-4 md:px-10 z-10">
           <div className="flex-1 flex justify-center">
             <img 
               src="/logo.png" 
               alt="Legacy Armoury Tome Logo" 
-              className="h-28 sm:h-32 md:h-36 lg:h-40 w-auto object-contain drop-shadow-2xl" 
+              className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto object-contain drop-shadow-2xl" 
             />
           </div>
 
-          <label className="cursor-pointer overflow-hidden rounded-2xl shadow-2xl ml-8">
-            <img 
-              src="/upload-button.png" 
-              alt="Upload New Grimoire" 
-              className="w-full h-20 md:h-24 lg:h-28 object-cover" 
-            />
+          <label className="cursor-pointer flex items-center gap-3 bg-gradient-to-r from-amber-900 to-red-900 hover:from-amber-800 hover:to-red-800 px-6 py-3 md:px-8 md:py-4 rounded-2xl text-base md:text-lg font-semibold transition-all shadow-2xl">
+            <Upload className="w-5 h-5" /> 
+            <span className="hidden sm:inline">UPLOAD NEW GRIMOIRE</span>
+            <span className="sm:hidden">UPLOAD</span>
             <input type="file" accept=".pdf" className="hidden" onChange={handleUpload} />
           </label>
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden flex-col md:flex-row">
-        {/* Library Sidebar */}
-        <div className="w-full md:w-80 border-b md:border-r border-amber-900 bg-[#140d08] p-6 overflow-auto">
+      <div className="flex flex-1 overflow-hidden">
+        <div className="w-80 border-r border-amber-900 bg-[#140d08] p-6 overflow-auto">
           <div className="mb-8 flex justify-center">
             <img 
               src="/library-header.png" 
@@ -157,11 +145,6 @@ export default function LegacyArmouryTome() {
                     <div className="text-xs text-amber-700">Legacy PDF</div>
                   </div>
                 </button>
-
-                <button onClick={() => downloadBook(book)} className="p-2 text-amber-400 hover:text-amber-300" title="Save to Device">
-                  <Download size={20} />
-                </button>
-
                 <button onClick={() => removeBook(book.id)} className="p-2 text-red-600 hover:text-red-400 hover:bg-red-950/50 rounded-lg">
                   <Trash2 size={20} />
                 </button>
@@ -170,33 +153,25 @@ export default function LegacyArmouryTome() {
           </div>
         </div>
 
-        {/* Main PDF Viewer */}
         <div className="flex-1 relative bg-[#1a120b] overflow-auto">
           {selectedBook ? (
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
               <Viewer
                 fileUrl={selectedBook}
                 plugins={[defaultLayoutPluginInstance]}
-                defaultScale={1}
+                defaultScale={SpecialZoomLevel.PageFit}
               />
             </Worker>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center px-8 relative overflow-hidden">
-              <img 
-                src="/empty-placeholder.png" 
-                alt="The Tomes of Legend Await" 
-                className="absolute inset-0 w-full h-full object-cover opacity-90" 
-              />
-              <div className="relative z-10 flex flex-col items-center">
-                <h2 className="text-5xl font-bold mb-6 text-amber-100 drop-shadow-2xl">The Tomes of Legend Await</h2>
-                <p className="text-xl max-w-md text-white drop-shadow-md">Upload your Legacy PDFs • They are saved permanently</p>
-              </div>
+            <div className="flex flex-col items-center justify-center h-full text-center px-12">
+              <BookOpen className="w-32 h-32 mb-8 text-amber-800" />
+              <h2 className="text-4xl mb-4">The Tomes of Legend Await</h2>
+              <p className="text-xl max-w-md text-amber-700">Upload your Legacy PDFs • They are saved permanently</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Disclaimer Footer */}
       <footer className="border-t border-amber-900 bg-black/80 p-4 text-center text-sm text-amber-600">
         This app is unofficial and unendorsed by Games Workshop.<br />
         Created by the Warhammer The Old World Community Podcast &amp; Old World Tavern Magazine.<br />
