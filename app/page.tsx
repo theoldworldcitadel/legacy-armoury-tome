@@ -44,9 +44,7 @@ export default function LegacyArmouryTome() {
         url: URL.createObjectURL(new Blob([item.data]))
       }));
 
-      // Sort Army Lists Alphabetically
       loaded.sort((a, b) => a.name.localeCompare(b.name));
-
       setLibrary(loaded);
     } catch (err) {
       console.error("Failed to load library", err);
@@ -98,8 +96,9 @@ export default function LegacyArmouryTome() {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   return (
-    <div className="min-h-screen bg-[#0a0603] text-amber-100 overflow-hidden flex flex-col">
-      <header className="relative border-b border-amber-900 bg-black overflow-hidden h-28 sm:h-32 md:h-36 lg:h-44">
+    <div className="min-h-screen bg-[#0a0603] text-amber-100 flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="relative border-b border-amber-900 bg-black overflow-hidden h-28 sm:h-32 md:h-36 lg:h-40 shrink-0">
         <img 
           src="/header-banner.png" 
           alt="Legacy Armoury Tome" 
@@ -112,7 +111,7 @@ export default function LegacyArmouryTome() {
             <img 
               src="/logo.png" 
               alt="Legacy Armoury Tome Logo" 
-              className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto object-contain drop-shadow-2xl" 
+              className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain drop-shadow-2xl" 
             />
           </div>
 
@@ -126,6 +125,7 @@ export default function LegacyArmouryTome() {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
         <div className="w-80 border-r border-amber-900 bg-[#140d08] p-6 overflow-auto">
           <div className="mb-8 flex justify-center">
             <img 
@@ -153,6 +153,7 @@ export default function LegacyArmouryTome() {
           </div>
         </div>
 
+        {/* Main Viewer Area */}
         <div className="flex-1 relative bg-[#1a120b] overflow-auto">
           {selectedBook ? (
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
@@ -163,16 +164,17 @@ export default function LegacyArmouryTome() {
               />
             </Worker>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center px-12">
+            <div className="flex flex-col items-center justify-center h-full text-center px-8">
               <BookOpen className="w-32 h-32 mb-8 text-amber-800" />
               <h2 className="text-4xl mb-4">The Tomes of Legend Await</h2>
-              <p className="text-xl max-w-md text-amber-700">Upload your Legacy PDFs • They are saved permanently</p>
+              <p className="text-xl text-amber-700">Upload your Legacy PDFs • They are saved permanently</p>
             </div>
           )}
         </div>
       </div>
 
-      <footer className="border-t border-amber-900 bg-black/80 p-4 text-center text-sm text-amber-600">
+      {/* Footer */}
+      <footer className="border-t border-amber-900 bg-black/80 p-4 text-center text-sm text-amber-600 shrink-0">
         This app is unofficial and unendorsed by Games Workshop.<br />
         Created by the Warhammer The Old World Community Podcast &amp; Old World Tavern Magazine.<br />
         <a href="https://www.patreon.com/" target="_blank" className="hover:text-amber-400 underline">Support us on Patreon</a>
